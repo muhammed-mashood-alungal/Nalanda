@@ -4,4 +4,8 @@ export const SUCCESS = {
     LOGIN_SUCCESS : 'Logged In Successfully',
     LOGGED_OUT : 'Logged out Successfully'
   },
+  BOOK :{
+    CREATED : "Book Created Successfully",
+    UPDATED :  "Book Updated Successfully"
+  }
 };

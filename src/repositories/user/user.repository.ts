@@ -17,7 +17,7 @@ export class UserRepository
     return await this.create(userData);
   }
   async getUserByEmail(email: string): Promise<IUserDocument | null> {
-    return await this.findOne({ email });
+    return await this.findOne({ email, isActive: true });
   }
   async getUserById(id: string): Promise<IUserDocument | null> {
     return await this.findById(id);
@@ -40,7 +40,11 @@ export class UserRepository
     }
 
     const [users, totalCount] = await Promise.all([
-      this.findAndpaginate(filter),
+      this.findAndpaginate(
+        filter,
+        Number(options?.page),
+        Number(options?.limit)
+      ),
       this.count(filter),
     ]);
 

@@ -6,6 +6,7 @@ import {
   Types,
   UpdateQuery,
 } from "mongoose";
+import { number } from "zod";
 
 export abstract class BaseRepository<T extends Document> {
   constructor(protected model: Model<T>) {}
@@ -74,22 +75,23 @@ export abstract class BaseRepository<T extends Document> {
 
   async findAndpaginate(
     filterOptions: FilterQuery<T> = {},
+    page?: number,
+    limit?: number,
     populate?: PopulateOptions | PopulateOptions[]
   ): Promise<T[]> {
-    const page = filterOptions?.page || 1;
-    const limit = filterOptions?.limit || 10;
+    const safePage = page || 1;
+    const safeLimit = limit || 10;
 
-    const skip = (page - 1) * limit;
+    const skip = (safePage - 1) * safeLimit;
     const query = this.model
       .find(filterOptions)
       .skip(skip)
-      .limit(limit)
+      .limit(safeLimit)
       .sort({ createdAt: -1 });
 
     if (populate) {
       query.populate(populate);
     }
-    
 
     return query.exec();
   }

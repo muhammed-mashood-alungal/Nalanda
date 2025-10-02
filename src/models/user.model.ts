@@ -1,11 +1,12 @@
 import { ERROR } from "@/constants";
 import mongoose, { Document, Types, Schema } from "mongoose";
+import { email } from "zod";
 
 export interface IUserDocument extends Document {
   _id: Types.ObjectId;
   name: string;
   email: string;
-  role : 'user' | 'admin'
+  role: "user" | "admin";
   membershipDate: Date;
   password: String;
   isActive: boolean;
@@ -38,10 +39,10 @@ const UserSchema: Schema = new Schema({
     required: [true, ERROR.USER.PASSWORD_REQUIRED],
     minLength: [6, ERROR.USER.MIN_PASSWORD_LENGTH],
   },
-  role : {
-    type : String,
-    enum : ['user', 'admin'],
-    default : 'user'
+  role: {
+    type: String,
+    enum: ["user", "admin"],
+    default: "user",
   },
   membershipDate: {
     type: Date,
@@ -52,5 +53,7 @@ const UserSchema: Schema = new Schema({
     default: true,
   },
 });
+
+UserSchema.index({ email: 1, isActive: 1 });
 
 export const User = mongoose.model<IUserDocument>("User", UserSchema);

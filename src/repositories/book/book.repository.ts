@@ -1,0 +1,92 @@
+import { Book, IBookDocument } from "@/models";
+import { BaseRepository } from "../base.repository";
+import { IBookRepository } from "./book.interface.repository";
+import { CreateBookDto, UpdateBookDto } from "@/dtos";
+import { IFilterOptions } from "@/types";
+import { FilterQuery } from "mongoose";
+
+export class BookRepository
+  extends BaseRepository<IBookDocument>
+  implements IBookRepository
+{
+  constructor() {
+    super(Book);
+  }
+
+  async createBook(bookData: CreateBookDto): Promise<IBookDocument> {
+    return await this.create(bookData);
+  }
+
+  async updateBook(
+    bookId: string,
+    bookData: UpdateBookDto
+  ): Promise<IBookDocument | null> {
+    return await this.findByIdAndUpdate(bookId, bookData);
+  }
+
+  async toggleBookDeletion(bookId: string, status: boolean): Promise<void> {
+    await this.findByIdAndUpdate(bookId, { isActive: status });
+  }
+
+  async getAllBooks(
+    options: IFilterOptions
+  ): Promise<{ books: IBookDocument[]; totalCount: number }> {
+    const filter = this._generateFilter(options);
+    const [books, totalCount] = await Promise.all([
+      this.findAndpaginate(
+        filter,
+        Number(options?.page),
+        Number(options?.limit)
+      ),
+      this.count(filter),
+    ]);
+    return { books, totalCount };
+  }
+
+  async getAllActiveBooks(
+    options: IFilterOptions
+  ): Promise<{ books: IBookDocument[]; totalCount: number }> {
+    const filter = this._generateFilter(options);
+    const [books, totalCount] = await Promise.all([
+      this.findAndpaginate(
+        { ...filter, isActive: true },
+        Number(options?.page),
+        Number(options?.limit)
+      ),
+      this.count(filter),
+    ]);
+    return { books, totalCount };
+  }
+
+  async getBookById(bookId: string): Promise<IBookDocument | null> {
+    return await this.findById(bookId);
+  }
+
+  private _generateFilter(
+    options?: IFilterOptions
+  ): FilterQuery<IBookDocument> {
+    const filter: FilterQuery<IBookDocument> = {};
+
+    if (options?.search) {
+      filter.title = { $regex: options.search, $options: "i" };
+    }
+    if (options?.author) {
+      filter.author = { $regex: options.search, $options: "i" };
+    }
+    if (options?.genre) {
+      filter.genre = options.genre;
+    }
+    if (options?.isbn) {
+      filter.isbn = options.isbn;
+    }
+    if (options?.status != undefined) {
+      filter.isActive = filter.status;
+    }
+
+    return filter;
+  }
+
+  async getBookByIsbn(isbn: string): Promise<IBookDocument | null> {
+    return await this.findOne({ isbn });
+  }
+}
