@@ -73,22 +73,24 @@ export abstract class BaseRepository<T extends Document> {
   }
 
   async findAndpaginate(
-    filterOptions: FilterQuery<T>,
-    page: number = 1,
-    limit: number = 10,
+    filterOptions: FilterQuery<T> = {},
     populate?: PopulateOptions | PopulateOptions[]
   ): Promise<T[]> {
+    const page = filterOptions?.page || 1;
+    const limit = filterOptions?.limit || 10;
+
     const skip = (page - 1) * limit;
     const query = this.model
       .find(filterOptions)
       .skip(skip)
       .limit(limit)
       .sort({ createdAt: -1 });
-    
+
     if (populate) {
       query.populate(populate);
     }
     
+
     return query.exec();
   }
 

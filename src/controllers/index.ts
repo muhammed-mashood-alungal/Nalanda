@@ -1,2 +1,3 @@
 export * from './auth/auth.controller'
-export * from './auth/auth.interface.controller'
+
+export * from './user/user.controller'

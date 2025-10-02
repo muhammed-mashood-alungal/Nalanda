@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import { errorResponse, verifyAccessToken } from "@/utils";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
 
-export const authMiddleware: RequestHandler = async (req, res, next) => {
+export const authenticateUser: RequestHandler = async (req, res, next) => {
   const accessToken = req.cookies.accessToken;
   if (!accessToken) {
     errorResponse(res, StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED);

@@ -10,6 +10,7 @@ export const ERROR = {
     USER_EXISTS: "User with this email already exists",
     INVALID_CREDENTIALS: "Invalid Credentials",
     USER_BLOCKED: "Your Account is Blocked",
+    NOT_FOUND : "User not found."
   },
   TOKEN: {
     ERROR_GENERATING_TOKEN: "An Error occured while generating Token",

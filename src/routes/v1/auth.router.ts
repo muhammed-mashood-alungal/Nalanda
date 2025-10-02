@@ -1,10 +1,10 @@
 import { AuthController } from "@/controllers";
-import { authMiddleware } from "@/middleware";
+import { authenticateUser } from "@/middleware";
 import { UserRepository } from "@/repositories";
 import { AuthService } from "@/services";
 import { Router } from "express";
 
-const authRouter = Router();
+export const authRouter = Router();
 
 const userRepository = new UserRepository();
 const authServices = new AuthService(userRepository);
@@ -15,7 +15,7 @@ authRouter.post("/login", authController.login.bind(authController));
 authRouter.post("/logout", authController.logout.bind(authController));
 authRouter.get(
   "/me",
-  authMiddleware,
+  authenticateUser,
   authController.authMe.bind(authController)
 );
 
