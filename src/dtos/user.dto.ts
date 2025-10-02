@@ -1,8 +1,14 @@
-import { userLoginSchema, userRegisterSchema } from "@/validations";
+import {
+  userLoginSchema,
+  userRegisterSchema,
+  userUpdationSchema,
+} from "@/validations";
 import z from "zod";
 
 export type UserRegisterDto = z.infer<typeof userRegisterSchema>;
 export type UserLoginDto = z.infer<typeof userLoginSchema>;
+export type UserUpdateDto = z.infer<typeof userUpdationSchema>;
+
 
 export interface UserResponseDto {
   id: string;
@@ -10,4 +16,3 @@ export interface UserResponseDto {
   isActive: boolean;
   membershipDate: string;
 }
-

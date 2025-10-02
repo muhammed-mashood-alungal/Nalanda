@@ -1,8 +1,8 @@
 import { IUserRepository } from "@/repositories";
 import { IUserService } from "./user.interface.service";
-import { UserResponseDto } from "@/dtos";
+import { UserResponseDto, UserUpdateDto } from "@/dtos";
 import { createHttpsError, paginate } from "@/utils";
-import { StatusCodes } from "http-status-codes";
+import { ReasonPhrases, StatusCodes } from "http-status-codes";
 import { ERROR } from "@/constants";
 import { UserMapper } from "@/mappers";
 import { IFilterOptions, IPagination } from "@/types";
@@ -34,7 +34,16 @@ export class UserService implements IUserService {
 
     return paginatedData;
   }
+
   async updateUserActiveState(id: string, status: boolean): Promise<void> {
     await this._userRepository.updateUserActiveState(id, status);
+  }
+
+  async updateUser(userId: string, update: UserUpdateDto): Promise<UserResponseDto> {
+    const user = await this._userRepository.updateUser(userId, update);
+    if (!user) {
+      throw createHttpsError(StatusCodes.NOT_FOUND, ERROR.USER.NOT_FOUND);
+    }
+    return UserMapper.toResponse(user);
   }
 }

@@ -1,8 +1,9 @@
 import { UserController } from "@/controllers";
-import { authenticateUser } from "@/middleware";
+import { authenticateUser, validateSchema } from "@/middleware";
 import { authorizeAdmin } from "@/middleware";
 import { UserRepository } from "@/repositories";
 import { UserService } from "@/services";
+import { userUpdationSchema } from "@/validations";
 import { Router } from "express";
 
 export const userRouter = Router();
@@ -34,4 +35,10 @@ userRouter.get(
   "/:userId",
   authenticateUser,
   userController.getUserDetailsById.bind(userController)
+);
+
+userRouter.put(
+  "/:userId",
+  validateSchema(userUpdationSchema),
+  userController.updateUser.bind(userController)
 );

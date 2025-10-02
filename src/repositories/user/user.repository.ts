@@ -2,7 +2,7 @@ import { IUserDocument, User } from "@/models";
 import { BaseRepository } from "../base.repository";
 import { IUserRepository } from "./user.interface.repository";
 import { UserRegisterDto } from "@/dtos";
-import { FilterQuery } from "mongoose";
+import { FilterQuery, UpdateQuery } from "mongoose";
 import { IFilterOptions } from "@/types";
 
 export class UserRepository
@@ -45,5 +45,12 @@ export class UserRepository
     ]);
 
     return { users, totalCount };
+  }
+
+  async updateUser(
+    userId: string,
+    update: UpdateQuery<IUserDocument>
+  ): Promise<IUserDocument | null> {
+    return await this.updateUser(userId, update);
   }
 }

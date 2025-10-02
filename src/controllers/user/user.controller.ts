@@ -65,4 +65,23 @@ export class UserController implements IUserController {
       next(error);
     }
   }
+
+  async updateUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const userId = req?.user?.id;
+      const updateData = req.body;
+      
+      const updatedUser = await this._userServices.updateUser(
+        userId,
+        updateData
+      );
+      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

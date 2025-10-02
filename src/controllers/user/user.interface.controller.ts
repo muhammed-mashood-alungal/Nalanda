@@ -9,4 +9,5 @@ export interface IUserController {
   getUsers(req: Request, res: Response, next: NextFunction): Promise<void>;
   deleteUser(req: Request, res: Response, next: NextFunction): Promise<void>;
   restoreUser(req: Request, res: Response, next: NextFunction): Promise<void>;
+  updateUser(req: Request, res: Response, next: NextFunction): Promise<void>;
 }
