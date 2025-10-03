@@ -6,3 +6,6 @@ export * from './user/user.service'
 
 export * from './book/book.interface.service'
 export * from './book/book.service'
+
+export * from './borrow/borrow.interface.service'
+export * from './borrow/borrow.service'

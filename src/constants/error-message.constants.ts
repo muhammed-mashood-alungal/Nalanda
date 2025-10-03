@@ -35,7 +35,21 @@ export const ERROR = {
     TOTAL_COPIES_MIN: "Total copies must be at least 1",
     AVAILABLE_COPIES_REQUIRED: "Available copies are required",
     AVAILABLE_COPIES_MIN: "Available copies cannot be negative",
-    BOOK_EXISTS : "Book with this ISBN already exists",
-    NOT_FOUND : "Book Not Found"
+    BOOK_EXISTS: "Book with this ISBN already exists",
+    NOT_FOUND: "Book Not Found",
+    INSUFFICIENT_COPIES: "Insuficient Copies Available.",
+  },
+  BORROW: {
+    USER_ID_REQUIRED: "User ID is required",
+    BOOK_ID_REQUIRED: "Book ID is required",
+    BORROW_DATE_REQUIRED: "Borrow date is required",
+    DUE_DATE_REQUIRED: "Due date is required",
+    STATUS_INVALID: "Status must be active, returned, or overdue",
+    FINE_MIN: "Fine cannot be negative",
+    RETURN_DATE_INVALID: "Return date cannot be before borrow date",
+    MAX_BORROW_LIMIT: "Maximum borrow limit reached (5 books)",
+    ALREADY_RETURNED: "This Book Already Returned",
+    NOT_FOUND: "Borrow Record Found",
+    ALREADY_HAVE_OVERDUE_BOOK: " ERROR.BORROW.ALREADY_HAVE_OVERDUE_BOOK",
   },
 };
