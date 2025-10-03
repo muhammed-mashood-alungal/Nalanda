@@ -77,6 +77,5 @@ const BookSchema: Schema = new Schema(
 );
 
 BookSchema.index({ title: "text", author: "text", genre: "text" });
-BookSchema.index({ genre: 1, isActive: 1 });
 
 export const Book = mongoose.model<IBookDocument>("Book", BookSchema);
