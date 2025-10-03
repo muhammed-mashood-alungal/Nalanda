@@ -17,7 +17,7 @@ export class BorrowRepository
   ): Promise<{ borrowList: IBorrowDocument[]; totalCount: number }> {
     const filter: IFilterOptions = {};
 
-    if (options?.status != "All") {
+    if (options?.status && options?.status != "All") {
       filter.status = options.status;
     }
 
@@ -52,7 +52,7 @@ export class BorrowRepository
     options: IFilterOptions
   ): Promise<{ borrowList: IBorrowDocument[]; totalCount: number }> {
     const filter: FilterQuery<IBorrowDocument> = {};
-    if (options?.status != "All") {
+    if (options?.status && options?.status != "All") {
       filter.status = options.status;
     }
     const [borrowList, totalCount] = await Promise.all([

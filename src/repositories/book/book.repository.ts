@@ -68,17 +68,16 @@ export class BookRepository
     const filter: FilterQuery<IBookDocument> = {};
 
     if (options?.search) {
-      filter.title = { $regex: options.search, $options: "i" };
+      const regex = { $regex: options.search, $options: "i" };
+
+      filter.$or = [
+        { title: regex },
+        { author: regex },
+        { isbn: regex },
+        { genre: regex },
+      ];
     }
-    if (options?.author) {
-      filter.author = { $regex: options.search, $options: "i" };
-    }
-    if (options?.genre) {
-      filter.genre = options.genre;
-    }
-    if (options?.isbn) {
-      filter.isbn = options.isbn;
-    }
+
     if (options?.status != undefined) {
       filter.isActive = filter.status;
     }
@@ -116,6 +115,6 @@ export class BookRepository
   }
 
   async increaseAvailability(bookId: string): Promise<void> {
-    await this.findByIdAndUpdate(bookId , {$inc : {availableCopies : 1}})
+    await this.findByIdAndUpdate(bookId, { $inc: { availableCopies: 1 } });
   }
 }

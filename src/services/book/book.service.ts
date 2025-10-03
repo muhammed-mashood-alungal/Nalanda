@@ -66,7 +66,7 @@ export class BookService implements IBookService {
   async getAllActiveBooks(
     options: IFilterOptions
   ): Promise<IPagination<BookResponseDto>> {
-    const { books, totalCount } = await this._bookRepository.getAllBooks(
+    const { books, totalCount } = await this._bookRepository.getAllActiveBooks(
       options
     );
     const mappedBooks = books.map(BookMapper.toResponse);

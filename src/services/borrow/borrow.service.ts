@@ -19,7 +19,7 @@ export class BorrowService implements IBorrowService {
   ): Promise<IPagination<BorrowResponseDto>> {
     const { borrowList, totalCount } =
       await this._borrowRepository.getAllBorrows(options);
-
+    console.log(borrowList);
     const mappedList = borrowList.map(BorrowMapper.toResponse);
 
     return paginate(
@@ -100,7 +100,9 @@ export class BorrowService implements IBorrowService {
       );
     }
 
-    await this._bookService.increaseAvailability(borrow.bookId.toString());
+    await this._bookService.increaseAvailability(
+      borrow.bookId?._id?.toString()
+    );
 
     const updatedBorrowRecord = await this._borrowRepository.returnBorrowedBook(
       borrowId

@@ -15,7 +15,7 @@ export class BookMapper {
   }
   static toAdminResponse(book: IBookDocument): BookAdminResponseDto {
     return {
-      ...this.toResponse(book),
+      ...BookMapper.toResponse(book),
       totalCopies: book.totalCopies,
       isActive: book.isActive,
     };

@@ -28,12 +28,12 @@ borrowRouter.get(
   "/",
   authenticateUser,
   authorizeAdmin,
-  validateSchema(borrowCreateSchema),
   bookController.getAllBorrows.bind(bookController)
 );
 borrowRouter.post(
-  "/",
+  "/:bookId",
   authenticateUser,
+  validateSchema(borrowCreateSchema),
   bookController.borrowBook.bind(bookController)
 );
 borrowRouter.get(

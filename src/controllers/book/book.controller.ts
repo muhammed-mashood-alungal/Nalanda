@@ -18,7 +18,7 @@ export class BookController implements IBookController {
       const bookData = req.body;
       const newBook = await this._bookService.createBook(bookData);
 
-      successResponse(res, StatusCodes.CREATED, SUCCESS.BOOK.CREATED, newBook);
+      successResponse(res, StatusCodes.CREATED, SUCCESS.BOOK.CREATED, {newBook});
     } catch (error) {
       next(error);
     }
@@ -33,7 +33,7 @@ export class BookController implements IBookController {
       const bookData = req.body;
       const { bookId } = req.params;
       const updatedBook = await this._bookService.updateBook(bookId, bookData);
-      successResponse(res, StatusCodes.OK, SUCCESS.BOOK.UPDATED, updatedBook);
+      successResponse(res, StatusCodes.OK, SUCCESS.BOOK.UPDATED, {updatedBook});
     } catch (error) {
       next(error);
     }
@@ -47,7 +47,7 @@ export class BookController implements IBookController {
     try {
       const { bookId } = req.params;
       const book = await this._bookService.getBookById(bookId);
-      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, book);
+      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, {book});
     } catch (error) {
       next(error);
     }
@@ -64,7 +64,7 @@ export class BookController implements IBookController {
         options as IFilterOptions
       );
 
-      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, books);
+      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, {books});
     } catch (error) {
       next(error);
     }
@@ -80,7 +80,7 @@ export class BookController implements IBookController {
         options as IFilterOptions
       );
 
-      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, books);
+      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, {books});
     } catch (error) {
       next(error);
     }

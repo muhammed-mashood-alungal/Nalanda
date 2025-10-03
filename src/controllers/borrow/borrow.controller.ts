@@ -77,7 +77,9 @@ export class BorrowController implements IBorrowController {
       const overDueBorrows = await this._borrowService.getOverdueBorrows(
         userId
       );
-      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, overDueBorrows);
+      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, {
+        overDueBorrows,
+      });
     } catch (error) {
       next(error);
       next();
