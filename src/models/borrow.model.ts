@@ -56,4 +56,6 @@ const BorrowSchema: Schema = new Schema(
   }
 );
 
+BorrowSchema.index({ userId: 1, status: 1 });
+
 export const Borrow = mongoose.model<IBorrowDocument>("Borrow", BorrowSchema);
