@@ -49,6 +49,14 @@ export class BorrowService implements IBorrowService {
       );
     }
 
+    const isAlreadyBorrowed = await this._borrowRepository.isBookBorrowedByUser(
+      borrowDetails.bookId,
+      borrowDetails.userId
+    );
+    
+    if (isAlreadyBorrowed)
+      throw createHttpsError(StatusCodes.BAD_REQUEST, ERROR.BORROW.ALREADY_BORROWED);
+
     const dueDate = borrowDetails.dueDate
       ? new Date(borrowDetails.dueDate)
       : this._calculateDueDate(14);
@@ -75,6 +83,8 @@ export class BorrowService implements IBorrowService {
       );
     }
 
+    await this._bookService.updateAvailableCount(book?.id?.toString(), -1);
+
     const newBorrowedData = await this._borrowRepository.borrowBook(
       borrowDetails
     );
@@ -100,8 +110,9 @@ export class BorrowService implements IBorrowService {
       );
     }
 
-    await this._bookService.increaseAvailability(
-      borrow.bookId?._id?.toString()
+    await this._bookService.updateAvailableCount(
+      borrow.bookId?._id?.toString(),
+      1
     );
 
     const updatedBorrowRecord = await this._borrowRepository.returnBorrowedBook(

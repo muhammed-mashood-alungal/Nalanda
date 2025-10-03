@@ -114,7 +114,7 @@ export class BookRepository
       .then((res) => res[0]);
   }
 
-  async increaseAvailability(bookId: string): Promise<void> {
-    await this.findByIdAndUpdate(bookId, { $inc: { availableCopies: 1 } });
+  async updateAvailableCount(bookId: string , change : number): Promise<void> {
+    await this.findByIdAndUpdate(bookId, { $inc: { availableCopies: change} });
   }
 }

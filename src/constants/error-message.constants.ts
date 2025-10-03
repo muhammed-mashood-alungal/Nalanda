@@ -54,6 +54,7 @@ export const ERROR = {
     MAX_BORROW_LIMIT: "Maximum borrow limit reached (5 books)",
     ALREADY_RETURNED: "This Book Already Returned",
     NOT_FOUND: "Borrow Record Found",
-    ALREADY_HAVE_OVERDUE_BOOK: " ERROR.BORROW.ALREADY_HAVE_OVERDUE_BOOK",
+    ALREADY_HAVE_OVERDUE_BOOK: "You Already have a Overdue Borrow, Please return it first",
+    ALREADY_BORROWED : "You have already borrowed this book."
   },
 };

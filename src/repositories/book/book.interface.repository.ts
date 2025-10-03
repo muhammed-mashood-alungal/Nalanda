@@ -18,5 +18,5 @@ export interface IBookRepository {
   getBookById(bookId: string): Promise<IBookDocument | null>;
   getBookByIsbn(isbn: string): Promise<IBookDocument | null>;
   getBookAvailability(): Promise<BookAvailability>;
-  increaseAvailability(bookId: string): Promise<void> 
+  updateAvailableCount(bookId: string, change: number): Promise<void>;
 }

@@ -116,7 +116,7 @@ export class BorrowRepository
     return this.model.aggregate([
       {
         $group: {
-          _id: "$user",
+          _id: "$userId",
           borrowCount: { $sum: 1 },
         },
       },
@@ -140,5 +140,11 @@ export class BorrowRepository
         },
       },
     ]);
+  }
+
+  async isBookBorrowedByUser(bookId: string, userId: string): Promise<boolean> {
+    return (
+      (await this.findOne({ bookId, userId, status: "active" })) != undefined
+    );
   }
 }

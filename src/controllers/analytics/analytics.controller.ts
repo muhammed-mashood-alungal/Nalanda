@@ -17,7 +17,7 @@ export class AnalyticsController implements IAnalyticsController {
       const activeMembers = await this._analyticsService.getActiveMembers(
         limit ? Number(limit) : 10
       );
-      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, activeMembers);
+      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, { activeMembers });
     } catch (error) {
       next(error);
     }
@@ -31,7 +31,9 @@ export class AnalyticsController implements IAnalyticsController {
     try {
       const bookAvailability =
         await this._analyticsService.getBookAvailability();
-      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, bookAvailability);
+      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, {
+        bookAvailability,
+      });
     } catch (error) {
       next(error);
     }
@@ -46,7 +48,9 @@ export class AnalyticsController implements IAnalyticsController {
     const mostBorrowedBooks = await this._analyticsService.getMostBorrowedBooks(
       limit ? Number(limit) : 10
     );
-    successResponse(res, StatusCodes.OK, ReasonPhrases.OK, mostBorrowedBooks);
+    successResponse(res, StatusCodes.OK, ReasonPhrases.OK, {
+      mostBorrowedBooks,
+    });
     try {
     } catch (error) {
       next(error);

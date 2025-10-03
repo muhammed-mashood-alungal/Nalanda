@@ -17,4 +17,5 @@ export interface IBorrowRepository {
   getOverdueBorrows(userId: string): Promise<IBorrowDocument[]>;
   getMostBorrowedBooks(limit: number): Promise<MostBorrowedBook[]>;
   getMostBorrowedUsers(limit: number): Promise<MostActiveMember[]>;
+  isBookBorrowedByUser(bookId : string , userId  :string) : Promise<boolean>  
 }
