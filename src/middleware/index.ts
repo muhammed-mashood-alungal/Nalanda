@@ -1,3 +1,5 @@
 export * from './user-auth.middleware'
 export * from './admin-auth.middleware'
 export * from './validate-schema.middleware'
+export * from './error-handler.middleware'
+export * from './not-found.middleware'

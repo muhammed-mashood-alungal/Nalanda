@@ -3,12 +3,13 @@ import { IAuthController } from "./auth.interface.controller";
 import { Request, Response, NextFunction } from "express";
 import {
   clearCookie,
+  createHttpsError,
   setAccessToken,
   setRefreshToken,
   successResponse,
 } from "@/utils";
 import { ReasonPhrases, StatusCodes } from "http-status-codes";
-import { SUCCESS } from "@/constants";
+import { ERROR, SUCCESS } from "@/constants";
 
 export class AuthController implements IAuthController {
   constructor(private _authService: IAuthService) {}
@@ -62,12 +63,7 @@ export class AuthController implements IAuthController {
     try {
       clearCookie(res, "accessToken");
       clearCookie(res, "refreshToken");
-      successResponse(
-        res,
-        StatusCodes.OK,
-        SUCCESS.AUTH.LOGGED_OUT,
-        ReasonPhrases.OK
-      );
+      successResponse(res, StatusCodes.OK, SUCCESS.AUTH.LOGGED_OUT);
     } catch (error) {
       next(error);
     }
@@ -79,8 +75,11 @@ export class AuthController implements IAuthController {
     next: NextFunction
   ): Promise<void> {
     try {
+      if(!req?.cookies?.refreshToken){
+        throw createHttpsError(StatusCodes.UNAUTHORIZED , ERROR.USER.TOKEN_NOT_FOUND)
+      }
       const authResponse = await this._authService.refreshAccessToken(
-        req.body.refreshToken
+        req?.cookies?.refreshToken
       );
 
       setAccessToken(res, authResponse.accessToken);
@@ -88,7 +87,7 @@ export class AuthController implements IAuthController {
       successResponse(
         res,
         StatusCodes.OK,
-        SUCCESS.AUTH.LOGIN_SUCCESS,
+        ReasonPhrases.OK,
         authResponse
       );
     } catch (error) {
@@ -100,7 +99,7 @@ export class AuthController implements IAuthController {
     try {
       const userId = req.user?.id;
       const user = await this._authService.authMe(userId!);
-      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, user);
+      successResponse(res, StatusCodes.OK, ReasonPhrases.OK, {user});
     } catch (error) {
       next(error);
     }

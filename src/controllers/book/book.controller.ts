@@ -94,7 +94,7 @@ export class BookController implements IBookController {
     try {
       const { bookId } = req.params;
       await this._bookService.toggleBookDeletion(bookId, false);
-      successResponse(res, StatusCodes.NO_CONTENT, ReasonPhrases.NO_CONTENT);
+      successResponse(res, StatusCodes.OK, ReasonPhrases.NO_CONTENT);
     } catch (error) {
       next(error);
     }
@@ -108,7 +108,7 @@ export class BookController implements IBookController {
     try {
       const { bookId } = req.params;
       await this._bookService.toggleBookDeletion(bookId, true);
-      successResponse(res, StatusCodes.NO_CONTENT, ReasonPhrases.NO_CONTENT);
+      successResponse(res, StatusCodes.OK, ReasonPhrases.NO_CONTENT);
     } catch (error) {
       next(error);
     }

@@ -47,7 +47,7 @@ export class UserController implements IUserController {
     try {
       const { userId } = req.params;
       await this._userServices.updateUserActiveState(userId!, false);
-      successResponse(res, StatusCodes.NO_CONTENT, ReasonPhrases.NO_CONTENT);
+      successResponse(res, StatusCodes.OK, ReasonPhrases.NO_CONTENT);
     } catch (error) {
       next(error);
     }
@@ -60,7 +60,7 @@ export class UserController implements IUserController {
     try {
       const { userId } = req.params;
       await this._userServices.updateUserActiveState(userId!, true);
-      successResponse(res, StatusCodes.NO_CONTENT, ReasonPhrases.NO_CONTENT);
+      successResponse(res, StatusCodes.OK, ReasonPhrases.NO_CONTENT);
     } catch (error) {
       next(error);
     }

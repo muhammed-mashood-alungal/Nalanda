@@ -1,7 +1,7 @@
 import app from "@/app";
-import { connectDB } from "@/config";
+import { connectDB, env } from "@/config";
 
-const PORT = 5000;
+const PORT = env.PORT || 5000;
 
 const startServer = async (): Promise<void> => {
   try {

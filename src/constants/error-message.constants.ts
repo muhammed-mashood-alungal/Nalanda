@@ -1,16 +1,20 @@
 export const ERROR = {
+  COMMON: {
+    END_POINT_NOT_FOUND: "URL End Point Not Found",
+  },
   USER: {
     NAME_REQUIRED: "Name is required",
     NAME_MIN_LENGTH: "Name must be at least 2 characters long",
     NAME_MAX_LENGTH: "Name cannot exceed 50 characters",
     EMAIL_REQUIRED: "Email is required",
     VALID_EMAIL: "Please provide a valid email address",
-    MIN_PASSWORD_LENGTH: "Password must be at least 2 characters long",
+    MIN_PASSWORD_LENGTH: "Password must be at least 6 characters long",
     PASSWORD_REQUIRED: "Password is required",
     USER_EXISTS: "User with this email already exists",
     INVALID_CREDENTIALS: "Invalid credentials",
     USER_BLOCKED: "Your account is blocked",
     NOT_FOUND: "User not found",
+    TOKEN_NOT_FOUND : "No token Provided"
   },
   TOKEN: {
     ERROR_GENERATING_TOKEN: "An error occurred while generating token",

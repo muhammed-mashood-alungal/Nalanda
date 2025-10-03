@@ -28,10 +28,6 @@ export const bookCreateSchema = z.object({
   totalCopies: z
     .number(ERROR.BOOK.TOTAL_COPIES_REQUIRED)
     .min(1, ERROR.BOOK.TOTAL_COPIES_MIN)
-    .default(1),
-  availableCopies: z
-    .number(ERROR.BOOK.TOTAL_COPIES_REQUIRED)
-    .min(0, ERROR.BOOK.AVAILABLE_COPIES_MIN)
     .default(1)
 });
 

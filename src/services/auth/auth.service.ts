@@ -93,8 +93,12 @@ export class AuthService implements IAuthService {
         ReasonPhrases.UNAUTHORIZED
       );
     }
-    const newAccessToken = await generateAccesToken(payload);
-    const newRefreshToken = await generateRefreshToken(payload);
+    const newPayload = {
+      id: payload.id,
+      role: payload.role,
+    };
+    const newAccessToken = await generateAccesToken(newPayload);
+    const newRefreshToken = await generateRefreshToken(newPayload);
 
     return {
       user: UserMapper.toResponse(user),

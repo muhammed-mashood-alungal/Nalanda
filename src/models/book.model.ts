@@ -62,7 +62,9 @@ const BookSchema: Schema = new Schema(
       type: Number,
       required: [true, ERROR.BOOK.AVAILABLE_COPIES_REQUIRED],
       min: [0, ERROR.BOOK.AVAILABLE_COPIES_MIN],
-      default: 1,
+      default: function (this: any) {
+        return this.totalCopies;
+      },
     },
     isActive: {
       type: Boolean,
