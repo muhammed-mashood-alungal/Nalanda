@@ -9,7 +9,7 @@ import { BookService, BorrowService, UserService } from "@/services";
 import { borrowCreateSchema } from "@/validations";
 import { Router } from "express";
 
-const borrowRouter = Router();
+export const borrowRouter = Router();
 
 const borrowRepository = new BorrowRepository();
 const userRepository = new UserRepository();

@@ -82,4 +82,7 @@ export class BookService implements IBookService {
   async toggleBookDeletion(bookId: string, status: boolean): Promise<void> {
     await this._bookRepository.toggleBookDeletion(bookId, status);
   }
+  async increaseAvailability(bookId: string): Promise<void> {
+    await this._bookRepository.increaseAvailability(bookId);
+  }
 }

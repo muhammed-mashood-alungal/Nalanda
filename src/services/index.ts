@@ -9,3 +9,6 @@ export * from './book/book.service'
 
 export * from './borrow/borrow.interface.service'
 export * from './borrow/borrow.service'
+
+export * from './analytics/analytics.interface'
+export * from './analytics/analytics.service'

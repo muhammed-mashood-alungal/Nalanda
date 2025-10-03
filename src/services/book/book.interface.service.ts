@@ -20,4 +20,5 @@ export interface IBookService {
     options: IFilterOptions
   ): Promise<IPagination<BookResponseDto>>;
   getBookById(bookId: string): Promise<BookResponseDto | null>;
+  increaseAvailability(bookId: string): Promise<void> 
 }

@@ -5,7 +5,7 @@ import { BookService } from "@/services";
 import { bookCreateSchema, bookUpdateSchema } from "@/validations";
 import { Router } from "express";
 
-const bookRouter = Router();
+export const bookRouter = Router();
 
 const bookRepository = new BookRepository();
 const bookService = new BookService(bookRepository);

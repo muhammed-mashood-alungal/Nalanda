@@ -1,7 +1,7 @@
 import { Borrow, IBorrowDocument } from "@/models";
 import { BaseRepository } from "../base.repository";
 import { IBorrowRepository } from "./borrow.interface.repository";
-import { IFilterOptions } from "@/types";
+import { IFilterOptions, MostActiveMember, MostBorrowedBook } from "@/types";
 import { FilterQuery } from "mongoose";
 
 export class BorrowRepository
@@ -85,5 +85,60 @@ export class BorrowRepository
       status: "active",
     });
     return dueDatedBorrows;
+  }
+
+  async getMostBorrowedBooks(limit: number): Promise<MostBorrowedBook[]> {
+    return await this.model.aggregate([
+      { $group: { _id: "$bookId", borrowCount: { $sum: 1 } } },
+      { $sort: { borrowCount: -1 } },
+      { $limit: limit },
+      {
+        $lookup: {
+          from: "books",
+          localField: "_id",
+          foreignField: "_id",
+          as: "bookDetails",
+        },
+      },
+      { $unwind: "$bookDetails" },
+      {
+        $project: {
+          _id: 0,
+          borrowCount: 1,
+          "bookDetails.title": 1,
+          "bookDetails.isbn": 1,
+        },
+      },
+    ]);
+  }
+
+  async getMostBorrowedUsers(limit: number): Promise<MostActiveMember[]> {
+    return this.model.aggregate([
+      {
+        $group: {
+          _id: "$user",
+          borrowCount: { $sum: 1 },
+        },
+      },
+      { $sort: { borrowCount: -1 } },
+      { $limit: limit },
+      {
+        $lookup: {
+          from: "users",
+          localField: "_id",
+          foreignField: "_id",
+          as: "userDetails",
+        },
+      },
+      { $unwind: "$userDetails" },
+      {
+        $project: {
+          _id: 1,
+          borrowCount: 1,
+          "userDetails.name": 1,
+          "userDetails.email": 1,
+        },
+      },
+    ]);
   }
 }

@@ -30,7 +30,6 @@ export class BorrowService implements IBorrowService {
     );
   }
 
-  
   async borrowBook(borrowDetails: CreateBorrowDto): Promise<BorrowResponseDto> {
     const user = await this._userService.getUserDetailsById(
       borrowDetails.userId
@@ -100,6 +99,8 @@ export class BorrowService implements IBorrowService {
         ERROR.BORROW.ALREADY_RETURNED
       );
     }
+
+    await this._bookService.increaseAvailability(borrow.bookId.toString());
 
     const updatedBorrowRecord = await this._borrowRepository.returnBorrowedBook(
       borrowId

@@ -2,7 +2,7 @@ import { Book, IBookDocument } from "@/models";
 import { BaseRepository } from "../base.repository";
 import { IBookRepository } from "./book.interface.repository";
 import { CreateBookDto, UpdateBookDto } from "@/dtos";
-import { IFilterOptions } from "@/types";
+import { BookAvailability, IFilterOptions } from "@/types";
 import { FilterQuery } from "mongoose";
 
 export class BookRepository
@@ -88,5 +88,34 @@ export class BookRepository
 
   async getBookByIsbn(isbn: string): Promise<IBookDocument | null> {
     return await this.findOne({ isbn });
+  }
+
+  async getBookAvailability(): Promise<BookAvailability> {
+    return this.model
+      .aggregate([
+        {
+          $group: {
+            _id: null,
+            totalBooks: { $sum: "$totalCopies" },
+            availableBooks: { $sum: "$availableCopies" },
+            borrowedBooks: {
+              $sum: { $subtract: ["$totalCopies", "$availableCopies"] },
+            },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            totalBooks: 1,
+            borrowedBooks: 1,
+            availableBooks: 1,
+          },
+        },
+      ])
+      .then((res) => res[0]);
+  }
+
+  async increaseAvailability(bookId: string): Promise<void> {
+    await this.findByIdAndUpdate(bookId , {$inc : {availableCopies : 1}})
   }
 }

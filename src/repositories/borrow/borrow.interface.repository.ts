@@ -1,6 +1,6 @@
 import { CreateBorrowDto } from "@/dtos";
 import { IBorrowDocument } from "@/models";
-import { IFilterOptions } from "@/types";
+import { IFilterOptions, MostActiveMember, MostBorrowedBook } from "@/types";
 
 export interface IBorrowRepository {
   getAllBorrows(
@@ -15,4 +15,6 @@ export interface IBorrowRepository {
   activeBorrowsOfUser(userId: string): Promise<number>;
   getBorrowById(borrowId: string): Promise<IBorrowDocument | null>;
   getOverdueBorrows(userId: string): Promise<IBorrowDocument[]>;
+  getMostBorrowedBooks(limit: number): Promise<MostBorrowedBook[]>;
+  getMostBorrowedUsers(limit: number): Promise<MostActiveMember[]>;
 }

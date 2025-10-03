@@ -1,6 +1,6 @@
 import { CreateBookDto, UpdateBookDto } from "@/dtos";
 import { IBookDocument } from "@/models";
-import { IFilterOptions } from "@/types";
+import { BookAvailability, IFilterOptions } from "@/types";
 
 export interface IBookRepository {
   createBook(bookData: CreateBookDto): Promise<IBookDocument>;
@@ -17,4 +17,6 @@ export interface IBookRepository {
   ): Promise<{ books: IBookDocument[]; totalCount: number }>;
   getBookById(bookId: string): Promise<IBookDocument | null>;
   getBookByIsbn(isbn: string): Promise<IBookDocument | null>;
+  getBookAvailability(): Promise<BookAvailability>;
+  increaseAvailability(bookId: string): Promise<void> 
 }
