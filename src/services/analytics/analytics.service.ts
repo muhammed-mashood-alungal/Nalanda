@@ -1,7 +1,6 @@
 import {
   IBookRepository,
   IBorrowRepository,
-  IUserRepository,
 } from "@/repositories";
 import { IAnalyticsService } from "./analytics.interface";
 import { BookAvailability, MostActiveMember, MostBorrowedBook } from "@/types";
