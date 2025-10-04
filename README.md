@@ -92,7 +92,7 @@ The application is containerized using Docker and deployed on AWS EC2:
 ---
 ## 🔑 Admin Credentials (For Review Purpose Only)
 
-**Login URL:** [Login Url](https://nalanda.mashood.site/api/v1/auth/login)  
+**Login URL:** https://nalanda.mashood.site/api/v1/auth/login
 **Email:** admin@gmail.com  
 **Password:** 123456  
 
