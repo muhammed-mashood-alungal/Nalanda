@@ -90,6 +90,15 @@ The application is containerized using Docker and deployed on AWS EC2:
 4. MongoDB connection is configured via environment variables
 
 ---
+## 🔑 Admin Credentials (For Review Purpose Only)
+
+**Login URL:** [Login Url](https://nalanda.mashood.site/api/v1/auth/login)  
+**Email:** admin@gmail.com  
+**Password:** 123456  
+
+> Note: This is a temporary account for testing. You can view all admin features such as user, books , borrow managements..
+
+---
 ## 🔗 Links
 
 - **Live API:** [View Link](https://nalanda.mashood.site/api/v1/)
